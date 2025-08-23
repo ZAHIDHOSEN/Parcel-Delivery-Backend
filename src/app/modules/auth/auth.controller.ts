@@ -3,6 +3,8 @@ import { catchAsync } from "../../utils/catchAsync";
 import { AuthServices } from "./auth.services";
 import { sendResponse } from "../../utils/sendResponse";
 import  httpStatus  from 'http-status-codes';
+import { setAuthCookie } from "../../utils/setCookie";
+import AppError from "../../errorHelpers/AppError";
 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -10,7 +12,8 @@ const credentialLogin = catchAsync(async(req:Request, res:Response, next: NextFu
    
     const loginInfo = await AuthServices.credentialLogin(req.body)
 
-     
+     setAuthCookie(res,loginInfo)
+
      sendResponse(res,{
             success: true,
             statusCode: httpStatus.OK,
@@ -23,7 +26,12 @@ const credentialLogin = catchAsync(async(req:Request, res:Response, next: NextFu
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getNewAccessToken = catchAsync(async(req:Request, res:Response, next: NextFunction)=>{
     const refreshToken = req.cookies.refreshToken
+    if(!refreshToken){
+        throw new AppError(httpStatus.BAD_REQUEST,"No refresh token received")
+    }
     const tokenInfo = await AuthServices.getNewAccessToken(refreshToken)
+
+    setAuthCookie(res,tokenInfo)
 
      
      sendResponse(res,{
@@ -35,10 +43,34 @@ const getNewAccessToken = catchAsync(async(req:Request, res:Response, next: Next
     
          })
 })
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const logout = catchAsync(async(req:Request, res:Response, next: NextFunction)=>{
+     
+   res.clearCookie("accessToken",{
+    httpOnly:true,
+    secure: false,
+    sameSite:"lax"
+   })
+   res.clearCookie("refreshToken",{
+    httpOnly:true,
+    secure: false,
+    sameSite:"lax"
+   })
+     
+     sendResponse(res,{
+            success: true,
+            statusCode: httpStatus.OK,
+            message: "logout Successfully",
+            data: null,
+    
+    
+         })
+})
 
 
 
 export const AuthController ={
     credentialLogin,
-    getNewAccessToken
+    getNewAccessToken,
+    logout
 }
