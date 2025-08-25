@@ -2,10 +2,11 @@
 import express, { Request, Response } from "express"
 import { userRoutes } from "./app/modules/user/user.route"
 import cors from "cors"
-import { globalErrorhandler } from "./app/middlewares/globalErrorhandler"
+
 import { notFound } from "./app/middlewares/notFound"
 import { AuthRoutes } from "./app/modules/auth/auth.route"
 import cookieParser from "cookie-parser"
+import { globalErrorHandler } from "./app/middlewares/globalErrorhandler"
 
 const app = express()
 app.use(cookieParser())
@@ -21,7 +22,7 @@ app.get("/",(req:Request, res:Response)=>{
 })
 
 
-app.use(globalErrorhandler)
+app.use(globalErrorHandler)
 app.use(notFound)
 
 export default app
