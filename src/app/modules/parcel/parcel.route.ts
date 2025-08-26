@@ -1,47 +1,18 @@
-import { Types } from "mongoose";
+import { Router } from "express";
+import { parcelController } from "./parcel.controller";
+import { checkAuth } from "../../middlewares/checkAuth";
+import { Role } from "../user/user.interface";
 
 
 
-export enum ParcelStatus {
-  Requested = 'Requested',
-  Approved = 'Approved',
-  Dispatched = 'Dispatched',
-  InTransit = 'In Transit',
-  Delivered = 'Delivered',
+const router = Router()
 
-}
-
-export interface statusLog {
-    status: ParcelStatus;
-    note ?: string;
-    location ?: string;
-}
+// sender route
+router.post("/create-parcel",checkAuth(Role.Sender),parcelController.createParcel)
+router.get("/:id",checkAuth(Role.Sender),parcelController.getASingleParcel)
+router.patch("/cancel/:id",checkAuth(Role.Sender),parcelController.cancelParcelBySender)
 
 
-export interface Address {
-  name: string; 
-  phone: string;
-  addressLine: string;
-  city: string;
-}
-
-export enum ParcelType {
- Document = 'Document',
-  SmallBox = 'SmallBox',
-  LargeBox = 'LargeBox',
-  Other = 'Other',
-}
 
 
-export interface IParcel {
-    _id ?: Types.ObjectId
-    trackingId?: string;
-    sender?: string;
-    receiver?: string;
-    type: ParcelType;
-    weight ?: string;
-    from?: Address;
-    to?: Address;
-    statusLog : statusLog[]
-
-}
+export const parcelRoute = router 

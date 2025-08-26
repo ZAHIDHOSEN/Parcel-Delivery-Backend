@@ -7,6 +7,7 @@ import { notFound } from "./app/middlewares/notFound"
 import { AuthRoutes } from "./app/modules/auth/auth.route"
 import cookieParser from "cookie-parser"
 import { globalErrorHandler } from "./app/middlewares/globalErrorhandler"
+import { parcelRoute } from "./app/modules/parcel/parcel.route"
 
 const app = express()
 app.use(cookieParser())
@@ -16,6 +17,7 @@ app.use(cors())
 
 app.use("/api/v1/user",userRoutes)
 app.use("/api/v1/auth",AuthRoutes)
+app.use("/api/v1/parcel",parcelRoute)
 
 app.get("/",(req:Request, res:Response)=>{
    res.send("welcome to parcel delivery backend")

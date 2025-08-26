@@ -8,6 +8,7 @@ export enum ParcelStatus {
   Dispatched = 'Dispatched',
   InTransit = 'In Transit',
   Delivered = 'Delivered',
+  Canceled = 'Canceled'
 
 }
 
@@ -36,8 +37,8 @@ export enum ParcelType {
 export interface IParcel {
     _id ?: Types.ObjectId
     trackingId?: string;
-    sender?: string;
-    receiver?: string;
+    sender?: Types.ObjectId;
+    receiver?: Types.ObjectId;
     type: ParcelType;
     weight ?: string;
     from?: IAddress;

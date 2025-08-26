@@ -23,8 +23,8 @@ const StatusLogSchema = new Schema<IStatusLog>({
 
 const ParcelSchema = new Schema<IParcel>({
     trackingId: {type: String},
-    sender: {type: Schema.Types.ObjectId,ref:"User",required:true},
-    receiver: {type: Schema.Types.ObjectId, ref:"User",required:true},
+    sender: {type: Schema.Types.ObjectId,ref:"User"},
+    receiver: {type: Schema.Types.ObjectId, ref:"User"},
     type: {
         type:String,
         enum:Object.values(ParcelType),
