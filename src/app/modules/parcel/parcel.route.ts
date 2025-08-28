@@ -12,6 +12,10 @@ router.post("/create-parcel",checkAuth(Role.Sender),parcelController.createParce
 router.get("/:id",checkAuth(Role.Sender),parcelController.getASingleParcel)
 router.patch("/cancel/:id",checkAuth(Role.Sender),parcelController.cancelParcelBySender)
 
+// receiver route
+router.get("/incoming/:id",checkAuth(Role.Receiver),parcelController.incomingParcelByReceiver)
+
+
 
 
 

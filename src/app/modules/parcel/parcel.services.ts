@@ -37,10 +37,20 @@ const cancelParcel = await Parcel.findByIdAndUpdate(id,payload,{new:true,runVali
 return cancelParcel
 }
 
+const incomingParcelByReceiver = async(id:string)=>{
+       const parcel = await Parcel.findById(id)
+       
+    return {
+        data: parcel
+    }
+    
+}
+
 
 
 export const parcelServices = {
     createParcel,
     getASingleParcel,
-    cancelParcelBySender
+    cancelParcelBySender,
+    incomingParcelByReceiver
 }

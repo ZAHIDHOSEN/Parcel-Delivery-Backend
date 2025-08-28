@@ -7,7 +7,7 @@ import  httpStatus  from 'http-status-codes';
 import { envVars } from "../../config/env";
 
 const createUser = async(payload: Partial<IUser>)=>{
-    const {email,password,...rest} = payload
+    const {email,password,role,...rest} = payload
 
      const isExits = await User.findOne({email})
      if(isExits){
@@ -21,6 +21,7 @@ const createUser = async(payload: Partial<IUser>)=>{
         email,
         auth: [authProvider],
          password:hashPassword,
+         role,
        
         ...rest
     })

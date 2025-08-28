@@ -56,8 +56,26 @@ const cancelParcelBySender = catchAsync(async(req:Request,res:Response,next: Nex
 })
 
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const incomingParcelByReceiver = catchAsync(async(req:Request,res:Response,next: NextFunction)=>{
+   const id = req.params.id;
+   const result = await parcelServices.incomingParcelByReceiver(id)
+
+     sendResponse(res,{
+        success: true,
+        statusCode: httpStatus.CREATED,
+        message: "receiver incoming parcel",
+        data: result.data,
+
+
+     })
+
+})
+
+
 export const parcelController = {
     createParcel,
     getASingleParcel,
-    cancelParcelBySender
+    cancelParcelBySender,
+    incomingParcelByReceiver
 }
