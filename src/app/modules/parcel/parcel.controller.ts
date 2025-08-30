@@ -30,7 +30,7 @@ const getASingleParcel = catchAsync(async(req:Request,res:Response,next: NextFun
 
      sendResponse(res,{
         success: true,
-        statusCode: httpStatus.CREATED,
+        statusCode: httpStatus.OK,
         message: "single parcel by sender",
         data: result.data,
 
@@ -72,10 +72,47 @@ const incomingParcelByReceiver = catchAsync(async(req:Request,res:Response,next:
 
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const conformParcelByReceiver = catchAsync(async(req:Request,res:Response,next: NextFunction)=>{
+   const id = req.params.id;
+   const payload = req.body;
+   const result = await parcelServices.conformParcelByReceiver(id,payload)
+
+     sendResponse(res,{
+        success: true,
+        statusCode: httpStatus.CREATED,
+        message: "receiver parcel delivered",
+        data: result
+
+
+     })
+
+})
+
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getAllParcel = catchAsync(async(req:Request,res:Response,next: NextFunction)=>{
+  
+   const result = await parcelServices.getAllParcel()
+
+     sendResponse(res,{
+        success: true,
+        statusCode: httpStatus.OK,
+        message: "All parcel here",
+        data: result
+
+
+     })
+
+})
+
 
 export const parcelController = {
     createParcel,
     getASingleParcel,
     cancelParcelBySender,
-    incomingParcelByReceiver
+    incomingParcelByReceiver,
+    conformParcelByReceiver,
+    getAllParcel
+    
 }

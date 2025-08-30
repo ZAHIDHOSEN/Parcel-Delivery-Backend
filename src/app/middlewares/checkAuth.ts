@@ -14,7 +14,7 @@ export const checkAuth = (...authRoles: string[]) => async(req:Request, res:Resp
    try{
        const accessToken = req.headers.authorization;
        if(!accessToken){
-        throw new AppError(403, "no token Recieved")
+        throw new AppError(httpStatus.UNAUTHORIZED, "No Access Token Received")
        }
 
        const verifiedToken = verifyToken(accessToken,envVars.JWT_ACCESS_SECRET) as JwtPayload

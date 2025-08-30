@@ -13,7 +13,7 @@ export enum ParcelStatus {
 }
 
 export interface IStatusLog {
-    status: ParcelStatus;
+    status?: ParcelStatus | string;
     note ?: string;
     location ?: string;
 }

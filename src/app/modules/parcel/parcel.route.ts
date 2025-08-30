@@ -7,13 +7,16 @@ import { Role } from "../user/user.interface";
 
 const router = Router()
 
-// sender route
+// admin and sender route
 router.post("/create-parcel",checkAuth(Role.Sender),parcelController.createParcel)
 router.get("/:id",checkAuth(Role.Sender),parcelController.getASingleParcel)
 router.patch("/cancel/:id",checkAuth(Role.Sender),parcelController.cancelParcelBySender)
+router.get("/all-parcel",checkAuth(Role.Super_Admin,Role.Admin),parcelController.getAllParcel)
 
 // receiver route
 router.get("/incoming/:id",checkAuth(Role.Receiver),parcelController.incomingParcelByReceiver)
+router.patch("/conform/:id",checkAuth(Role.Receiver),parcelController.conformParcelByReceiver)
+
 
 
 
