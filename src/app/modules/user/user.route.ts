@@ -9,7 +9,7 @@ import { Role } from "./user.interface";
 const router = Router()
 
 router.post("/register",validateRequest(createUserZodSchema),userController.createUser)
-router.get("/all-user",checkAuth(Role.Admin),userController.getAllUser)
+router.get("/all-user",checkAuth(Role.Admin,Role.Super_Admin),userController.getAllUser)
 router.patch("/:id",validateRequest(updateUserZodSchema),checkAuth(Role.Admin,Role.Super_Admin),userController.updateUser)
 
 
